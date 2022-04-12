@@ -12,30 +12,38 @@
 
 # You may import the glob, numpy, sys, pandas, and/or os libraries
 import os
+import sys
 import shutil
 
 
 def single_level_dir():
     path = './singleRoot'
-    os.mkdir(path)
-    for elem in range(1, 101):
-        file_name = 'file' + str(elem) + '.txt'
-        fp = open(os.path.join(path, file_name), 'x')
-        fp.close()
-
+    try:
+        os.mkdir(path)
+        for elem in range(1, 101):
+            file_name = 'file' + str(elem) + '.txt'
+            fp = open(os.path.join(path, file_name), 'x')
+            fp.close()
+    except OSError:
+        print('your files already exist')
+        sys.exit(1)
 
 def hierarchical_level_dir():
     i = 1
     path = './hierarchicalRoot'
-    os.mkdir(path)
-    for elem in range(1, 11):                                       # create dirs
-        dir_name = 'files' + str(i) + '-' + str(i + 9)
-        i += 10
-        os.makedirs(os.path.join(path, dir_name))
-    for elem in range(1, 101):                                      # create files
-        file_name = 'file' + str(elem) + '.txt'
-        fp = open(os.path.join(path, file_name), 'x')
-        fp.close()
+    try:
+        os.mkdir(path)
+        for elem in range(1, 11):                                       # create dirs
+            dir_name = 'files' + str(i) + '-' + str(i + 9)
+            i += 10
+            os.makedirs(os.path.join(path, dir_name))
+        for elem in range(1, 101):                                      # create files
+            file_name = 'file' + str(elem) + '.txt'
+            fp = open(os.path.join(path, file_name), 'x')
+            fp.close()
+    except OSError:
+        print('your files already exist')
+        sys.exit(1)
     for elem in range(1, 101):                                      # loop through dirs and move files
         filename = 'file' + str(elem) + '.txt'
         if elem <= 10:
