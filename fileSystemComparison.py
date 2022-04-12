@@ -11,6 +11,7 @@
 # file system? (hint, think about approximating a path)
 
 import os
+import shutil
 
 
 def single_level_dir():
@@ -23,17 +24,40 @@ def single_level_dir():
 
 
 def hierarchical_level_dir():
+    i = 1
     path = './hierarchicalRoot'
     os.mkdir(path)
     for elem in range(1, 11):
-        dir_name = 'files' + str(elem) + '-' + str(elem+9)
+        dir_name = 'files' + str(i) + '-' + str(i + 9)
+        i += 10
         os.makedirs(os.path.join(path, dir_name))
-    for elem in range(1, 101):
+    for elem in range(1, 101):                                      # create files
         file_name = 'file' + str(elem) + '.txt'
         fp = open(os.path.join(path, file_name), 'x')
         fp.close()
 
-    # move files to the appropriate directory after generating the directories
+    for elem in range(1, 101):                                      # loop through dirs and move files
+        filename = 'file' + str(elem) + '.txt'
+        if elem <= 10:
+            shutil.move(os.path.join(path, filename), './hierarchicalRoot/files1-10')
+        elif elem <= 20:
+            shutil.move(os.path.join(path, filename), './hierarchicalRoot/files11-20')
+        elif elem <= 30:
+            shutil.move(os.path.join(path, filename), './hierarchicalRoot/files21-30')
+        elif elem <= 40:
+            shutil.move(os.path.join(path, filename), './hierarchicalRoot/files31-40')
+        elif elem <= 50:
+            shutil.move(os.path.join(path, filename), './hierarchicalRoot/files41-50')
+        elif elem <= 60:
+            shutil.move(os.path.join(path, filename), './hierarchicalRoot/files51-60')
+        elif elem <= 70:
+            shutil.move(os.path.join(path, filename), './hierarchicalRoot/files61-70')
+        elif elem <= 80:
+            shutil.move(os.path.join(path, filename), './hierarchicalRoot/files71-80')
+        elif elem <= 90:
+            shutil.move(os.path.join(path, filename), './hierarchicalRoot/files81-90')
+        elif elem <= 100:
+            shutil.move(os.path.join(path, filename), './hierarchicalRoot/files91-100')
 
 
 def comp_size_diff():
