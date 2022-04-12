@@ -10,6 +10,7 @@
 # the root directory can have an arbitrary number of files. How could we implement something similar to a hierarchical
 # file system? (hint, think about approximating a path)
 
+# You may import the glob, numpy, sys, pandas, and/or os libraries
 import os
 import shutil
 
@@ -59,23 +60,44 @@ def hierarchical_level_dir():
             shutil.move(os.path.join(path, filename), './hierarchicalRoot/files91-100')
 
 
-def comp_size_diff():
-    print()
-    #     Starting from your new root directories (singleRoot and hierarchicalRoot), write a program that starts at the
-    #     root, and then descends the file tree (if it can) from the root.
-    #         For both singleLevel and hierarchical, save the size of all the files and the names that you find into a data
-    #         structure (if python, I suggest a list or dict). Write each filename and its size to a text file in the
-    #         associated root. Name it singleLevelFiles.txt and hierarchicalFiles.txt, respectively.
-    #             hierarchicalFiles.txt should contain the size of each directory as part of its contents (single level
-    #             doesn't need this, because single level doesn't use other directories)
-    #     Print the number of files in each txt file (singleLevelFiles and hierarchicalFiles) to the screen
-    #     Print the average size of each file to the screen
-    #         Due to my oversight when writing this assignment, I will accept average file sizes that contain directories;
-    #         OR you can report the average directory size separately from average file size. Either will do.
+def traverse_single():
+    single = []
+    for root, dirs, files in os.walk('./singleRoot'):
+        fp = open(os.path.join('./singleRoot', 'singleLevelFiles.txt'), 'w')
+        # print(sum(os.path.getsize(os.path.join(root, name)) for name in files), end=" ")
+        # print("bytes in", len(files), "non-directory files")
+        fp.close()
+
+    # save the size of all the files and the names that you find into a list
+    # write each filename and its size to a text file in the associated root
+    # print the number of files in each txt file (singleLevelFiles and hierarchicalFiles) to the screen
+    # print the average size of each file to the screen
+        # Due to my oversight when writing this assignment, I will accept average file sizes that contain directories;
+        # OR you can report the average directory size separately from average file size. Either will do.
 
 
-def comp_traversal_time_diff():
-    print()
+def traverse_hierarchical():
+    hierarchical = []
+    for root, dirs, files in os.walk('./hierarchicalRoot'):
+        fp = open(os.path.join('./hierarchicalRoot', 'hierarchicalFiles.txt'), 'w')
+        # note: hierarchicalFiles.txt should contain the size of each directory as part of its contents
+        fp.close()
+
+
+def comp_traversal_time(root): # pass in root to traverse
+    time = 0
+    if root == './hierarchicalRoot':
+        # start
+        traverse_hierarchical()
+        # stop
+        # time = stop - start
+    elif root == './singleRoot':
+        # start
+        traverse_single()
+        # stop
+        # time = stop - start
+    return time
+
     #     Import or include a time library that allows you to track how long it takes to get all of the data about files in
     #     singleLevelFiles, and how long it takes to get all of the data about files and directories in hierarchicalFiles.
     #     Whatever library you import should be capable of doing this in milliseconds. Print the total traversal time to the
@@ -84,13 +106,20 @@ def comp_traversal_time_diff():
 
 
 def main():
+    single_root = './hierarchicalRoot'
+    hierarchical_root = './singleRoot'
+
     single_level_dir()
-    hierarchical_level_dir()
-    # In summary, you will have code to generate your singleLevel directory. You will generate 100 files within that
-    # directory. You will calculate the number of files in the singleLevel directory. You will calculate the average
-    # size of the files in the singleLevel directory. You will calculate the execution time to descend from root and
-    # gather all file names/sizes. Print each value in that order. Repeat the same exercise for hierarchical, including
-    # the subdirectory names and sizes.
+    # hierarchical_level_dir()
+    # comp_traversal_time(single_root)
+    # comp_traversal_time(hierarchical_root)
+
+    # calculate the number of files in the singleLevel directory
+    # calculate the average size of the files in the singleLevel directory
+    # calculate the execution time to descend from root and gather all file names/sizes
+    # print each value
+
+    # Repeat the same exercise for hierarchical, including the subdirectory names and sizes
 
 if __name__ == "__main__":
     main()
