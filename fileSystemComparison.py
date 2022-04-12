@@ -27,7 +27,7 @@ def hierarchical_level_dir():
     i = 1
     path = './hierarchicalRoot'
     os.mkdir(path)
-    for elem in range(1, 11):
+    for elem in range(1, 11):                                       # create dirs
         dir_name = 'files' + str(i) + '-' + str(i + 9)
         i += 10
         os.makedirs(os.path.join(path, dir_name))
@@ -35,7 +35,6 @@ def hierarchical_level_dir():
         file_name = 'file' + str(elem) + '.txt'
         fp = open(os.path.join(path, file_name), 'x')
         fp.close()
-
     for elem in range(1, 101):                                      # loop through dirs and move files
         filename = 'file' + str(elem) + '.txt'
         if elem <= 10:
