@@ -10,22 +10,30 @@
 # the root directory can have an arbitrary number of files. How could we implement something similar to a hierarchical
 # file system? (hint, think about approximating a path)
 
+import os
+
+
 def single_level_dir():
-    print()
-    #     Create a directory called "/singleRoot" in your user specific home directory (~)- note: ~ is specific to linux.
-    #     ~ is equivalent to your user space home, so ~ for me would be the same as /home/sarad/
-    #     Within singleRoot, generate 100 files, named file1.txt ... file100.txt (in python, you can only concatenate
-    #     strings with the + sign, so be sure to cast any int type variables to strings if you're adding them to the name)
+    path = './singleRoot'
+    os.mkdir(path)
+    for elem in range(1, 101):
+        file_name = 'file' + str(elem) + '.txt'
+        fp = open(os.path.join(path, file_name), 'x')
+        fp.close()
 
 
 def hierarchical_level_dir():
-    print()
-    #     Create a directory called "/hierarchicalRoot" in ~ - note: see above
-    #     Within hierarchicalRoot, generate 100 files named file1.txt ... file100.txt
-    #     Create 10 directories for your 100 files. Your first directory should be called files1-10, your second should be
-    #     files11-20 and so on.
-    #         Either create these directories first and then generate the appropriate text files within, or generate your
-    #         files first and move them to the appropriate directory after generating the directory
+    path = './hierarchicalRoot'
+    os.mkdir(path)
+    for elem in range(1, 11):
+        dir_name = 'files' + str(elem) + '-' + str(elem+9)
+        os.makedirs(os.path.join(path, dir_name))
+    for elem in range(1, 101):
+        file_name = 'file' + str(elem) + '.txt'
+        fp = open(os.path.join(path, file_name), 'x')
+        fp.close()
+
+    # move files to the appropriate directory after generating the directories
 
 
 def comp_size_diff():
@@ -53,7 +61,8 @@ def comp_traversal_time_diff():
 
 
 def main():
-    print()
+    single_level_dir()
+    hierarchical_level_dir()
     # In summary, you will have code to generate your singleLevel directory. You will generate 100 files within that
     # directory. You will calculate the number of files in the singleLevel directory. You will calculate the average
     # size of the files in the singleLevel directory. You will calculate the execution time to descend from root and
