@@ -80,13 +80,12 @@ def traverse_single():
 def traverse_hierarchical():                                                                                                        # hierarchical traverse
     hierarchical = []
     dirs = []
-
-    # sum(os.path.getsize(f) for f in os.listdir('.') if os.path.isfile(f))
-    # dirs = os.listdir('./hierarchicalRoot')
-    # print(dirs)
-
-    return hierarchical
-        # note: hierarchicalFiles.txt should contain the size of each directory as part of its contents
+    for root, sub_dirs, files in os.walk('./hierarchicalRoot'):
+        for name in files:
+            hierarchical += [[os.path.join(root, name), os.path.getsize(os.path.join(root, name))]]
+        for name in sub_dirs:
+            dirs += [[os.path.join(root, str(name)), os.path.getsize(os.path.join(root, str(name)))]]
+    return hierarchical, dirs
 
 
 def comp_traversal_time(root):
