@@ -77,7 +77,7 @@ def traverse_single():
     return single
 
 
-def traverse_hierarchical():                                                                                                        # hierarchical traverse
+def traverse_hierarchical():
     hierarchical = []
     dirs = []
     for root, sub_dirs, files in os.walk('./hierarchicalRoot'):
@@ -85,7 +85,7 @@ def traverse_hierarchical():                                                    
             hierarchical += [[os.path.join(root, name), os.path.getsize(os.path.join(root, name))]]
         for name in sub_dirs:
             dirs += [[os.path.join(root, str(name)), os.path.getsize(os.path.join(root, str(name)))]]
-    return hierarchical, dirs
+    return dirs, hierarchical
 
 
 def comp_traversal_time(root):
@@ -94,8 +94,7 @@ def comp_traversal_time(root):
         data_list_hierarchical = traverse_hierarchical()
         stop = perf_counter()
         total_time = ((stop - start) * 1000)                # calc total time (milliseconds)
-                                                                                                                        # set up data to be returned to main
-        return total_time, data_list_hierarchical
+        return total_time, data_list_hierarchical[0], data_list_hierarchical[1]
     if root == './singleRoot':
         start = perf_counter()
         data_list_single = traverse_single()
@@ -120,19 +119,28 @@ def main():
     print('Number of files: ' + str(len(data_single)))
     print('Average file size: ' + str(file_bytes_single / len(data_single)))
     print('Traversal time: ' + str(float("{0:.4f}".format(run_time_single))))
-
-
     hierarchical_root = './hierarchicalRoot' # ---------------------------------------------- hierarchical -------------
     hierarchical_level_dir()
-    traverse_hierarchical()                                                                                             # DELETE AFTER TESTING
-    # data_list_hierarchical = comp_traversal_time(hierarchical_root)
-    # run_time_hierarchical = data_list_hierarchical[0]
-    # data_files_hierarchical = data_list_hierarchical[1][0]
-    # data_dirs_hierarchical = data_list_hierarchical[1][1]
-    # file_bytes_hierarchical = 0
-    # fp_hierarchical = open(os.path.join('./hierarchicalRoot', 'hierarchicalFiles.txt'), 'a')
-
-    # fp_hierarchical.close()
+    data_list_hierarchical = comp_traversal_time(hierarchical_root)
+    run_time_hierarchical = data_list_hierarchical[0]
+    data_dirs_hierarchical = data_list_hierarchical[1]
+    data_files_hierarchical = data_list_hierarchical[2]
+    dir_bytes_hierarchical = 0
+    file_bytes_hierarchical = 0
+    fp_hierarchical = open(os.path.join('./hierarchicalRoot', 'hierarchicalFiles.txt'), 'a')
+    for i in range (0, len(data_dirs_hierarchical)):
+        fp_hierarchical.write(str(data_dirs_hierarchical[i][0]) + ': ' + str(data_dirs_hierarchical[i][1]) + 'bytes\n')
+        dir_bytes_hierarchical += data_dirs_hierarchical[i][1]
+    for i in range (0, len(data_files_hierarchical)):
+        fp_hierarchical.write(str(data_files_hierarchical[i][0]) + ': ' + str(data_files_hierarchical[i][1]) + 'bytes\n')
+        file_bytes_hierarchical += data_files_hierarchical[i][1]
+    fp_hierarchical.close()
+    print('\nHierarchical level file system')
+    print('Number of directories: ' + str(len(data_dirs_hierarchical)))
+    print('Number of files: ' + str(len(data_files_hierarchical)))
+    print('Average file size: ' + str(file_bytes_hierarchical / len(data_files_hierarchical)))
+    print('Average directory size: ' + str(dir_bytes_hierarchical / len(data_dirs_hierarchical)))
+    print('Traversal time: ' + str(float("{0:.4f}".format(run_time_hierarchical))))
 
 
 if __name__ == "__main__":
