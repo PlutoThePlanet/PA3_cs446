@@ -2,13 +2,30 @@
 # Paige Mortensen
 # CS 446 PA3 - compare and contrast single level file directories with hierarchical file directories
 
-# QUESTIONS
-# discuss any similarities/dissimilarities in the printed output between singleLevelFiles.txt and hierarchicalFiles.txt
-# explain the reason these differences or similarities exist
+    # QUESTION 1: discuss any similarities/dissimilarities in the printed output between singleLevelFiles.txt and
+    # hierarchicalFiles.txt explain the reason these differences or similarities exist
+# For the similarities within the two files, all the generated text files have the same size of 0 bytes and are listed
+# in the file. But, for the differences, the size and presence of the directories and the access order of each file is
+# different. The directories have an average size of 4096 bytes because they each contain 10 files, whereas the
+# single-level directory does not contain any subdirectories (and therefore no subdirectories are listed). As for the
+# access process, in the single level directory, all 100 files are randomly accessed and therefore listed out-of-order
+# in terms of their numbering. But, in the hierarchical level system, the directories are randomly gatered and printed,
+# but so are the files within them. To explain, the system grabbed a directory and then grabbed all 10 files. Then the
+# next directory is accessed and the next ten files are listed. This means that not all 100 files are intermingled, but
+# that each set of 10 files is. This is because of how we have our files nested inside our folders and how they are
+# being traversed.
 
-# We have a simple file system that only supports a single-level architecture. Files can have arbitrarily long names and
-# the root directory can have an arbitrary number of files. How could we implement something similar to a hierarchical
-# file system? (hint, think about approximating a path)
+    # QUESTION 2: We have a simple file system that only supports a single-level architecture. Files can have
+    # arbitrarily long names and the root directory can have an arbitrary number of files. How could we implement
+    # something similar to a hierarchical file system? (hint, think about approximating a path)
+# In this file system, we the user could devise a naming pattern for the files. For example, if we wanted to place
+# something in an arbitrary "directory", we could name our files something like dir1_filename_1.txt, dir1_filename_2.txt
+# Then for the second "directory", we could name our files dir2_filename_1.txt, dir2_filename_2.txt. This would
+# automatically sort the files in alphabetical/numerical order (making the assumption that the system does this like
+# normal), and would allow the user to easier search for and find their files based on name alone. Their files wouldn't
+# be in nested folders and would still be in one long list, but at least they could have some way of creating a "path"
+# and or "nesting" their folders with a naming convention of their choosing, This would also ensure that like files are
+# placed near one another (again, assuming alphanumerical sorting applies).
 
 
 import os
